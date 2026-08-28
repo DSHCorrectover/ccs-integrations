@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling>=1.21"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ccs-crewai"
+version = "0.1.0"
+description = "Cryptographic runtime receipts for CrewAI agents — signed Ed25519 audit evidence for every tool call. CCS (Correctover Conformance Shape) L1 + behavior receipts with pre-admission guardrails."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Correctover / CCS Integrations" },
+]
+keywords = [
+    "ai-security", "agent-security", "guardrails", "runtime-security", "llm-security",
+    "cryptographic-receipts", "audit-trail", "non-repudiation", "compliance", "governance",
+    "ed25519", "jcs", "rfc8785", "signed-receipts", "tamper-evidence", "verifiable",
+    "runtime-verification", "tool-call-validation", "observability",
+    "crewai", "crew-ai", "multi-agent", "supply-chain-security", "owasp-asi", "ai-agents",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Security",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "jcs>=0.2.0",
+    "cryptography>=41.0.0",
+]
+
+[project.optional-dependencies]
+# CrewAI is optional: receipt production/verification and the CLI work without it.
+crewai = ["crewai>=0.100.0"]
+dev = [
+    "pytest>=7.0",
+    "build>=1.0",
+]
+
+[project.scripts]
+ccs-crewai-verify = "ccs_crewai.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/DSHCorrectover/ccs-integrations"
+Documentation = "https://github.com/DSHCorrectover/ccs-integrations/tree/main/adapters/ccs-crewai#readme"
+Issues = "https://github.com/DSHCorrectover/ccs-integrations/issues"
+Specification = "https://www.ietf.org/archive/id/draft-correctover-ccs-08.txt"
+Conformance = "https://github.com/DSHCorrectover/ccs-conformance-vectors"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ccs_crewai"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
