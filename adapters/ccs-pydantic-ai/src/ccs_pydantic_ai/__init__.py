@@ -11,16 +11,25 @@ Two-line integration::
 
 Every tool call then emits a signed 30-field CCS L1 action receipt and a linked
 ``ccs.behavior_evidence.v1`` receipt to the configured sink (stdout JSON lines
-by default). Receipts can be independently verified with
-``ccs-verifier==1.3.0``::
+by default). Receipts can be independently verified with the open-source
+verifier (no proprietary dependency)::
 
-    from ccs_verifier.ccs_verifier_l1 import L1Receipt
-    receipt = L1Receipt.from_dict(data, strict=True)
-    assert receipt.verify_signature()
+    from ccs_pydantic_ai import verify_l1_receipt, verify_chain
+    ok, reason = verify_l1_receipt(receipt_dict)
+
+Or from the command line::
+
+    ccs-verify receipt.json
 """
 
 from __future__ import annotations
 
+__version__ = "0.1.0"
+
+# ---------------------------------------------------------------------------
+# Lightweight imports (no pydantic-ai dependency) — available to everyone,
+# including the CLI which must work in environments without pydantic-ai.
+# ---------------------------------------------------------------------------
 from .config import CCSConfig, ReceiptRecord, ReceiptSink
 from .hashing import canonical_json, canonical_sha256_hex
 from .receipt_builder import (
@@ -39,18 +48,27 @@ from .signer import (
     fingerprint,
     verify_ed25519,
 )
-from .toolset import CCSCapability, CCSToolset
 
-__version__ = "0.1.0"
+# Open-source minimal verifier (MIT, no proprietary dependency).
+from .verifier import (
+    L1_FIELDS as VERIFIER_L1_FIELDS,
+    VerificationError,
+    verify_l1_receipt,
+    verify_l1_signature,
+    verify_chain,
+    verify_behavior_linkage,
+    verify_behavior_signature,
+)
 
 __all__ = [
-    # Primary API
+    # Primary API (lazy, requires pydantic-ai)
     "CCSCapability",
     "CCSToolset",
+    # Config
     "CCSConfig",
     "ReceiptRecord",
     "ReceiptSink",
-    # Builder / hashing (advanced / verification helpers)
+    # Builder / hashing
     "ReceiptBuilder",
     "BuiltReceipts",
     "canonical_json",
@@ -78,13 +96,22 @@ __all__ = [
     "__version__",
 ]
 
-# Open-source minimal verifier (MIT, no proprietary dependency).
-from .verifier import (
-    L1_FIELDS as VERIFIER_L1_FIELDS,
-    VerificationError,
-    verify_l1_receipt,
-    verify_l1_signature,
-    verify_chain,
-    verify_behavior_linkage,
-    verify_behavior_signature,
-)
+# ---------------------------------------------------------------------------
+# Lazy imports for pydantic-ai–dependent components.
+# This allows the CLI and verifier to work without pydantic-ai installed.
+# ---------------------------------------------------------------------------
+_LAZY = {
+    "CCSCapability": (".toolset", "CCSCapability"),
+    "CCSToolset": (".toolset", "CCSToolset"),
+}
+
+
+def __getattr__(name: str):  # PEP 562
+    if name in _LAZY:
+        module_path, attr = _LAZY[name]
+        import importlib
+        mod = importlib.import_module(module_path, __name__)
+        value = getattr(mod, attr)
+        globals()[name] = value
+        return value
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")

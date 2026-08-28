@@ -200,6 +200,45 @@ ok, reason = verify_l1_receipt(tampered)
 # ok == False, reason contains "signature does not verify"
 ```
 
+
+### Command-line verification
+
+After `pip install ccs-pydantic-ai`, a `ccs-verify` command is available:
+
+```bash
+# Verify a single L1 receipt
+ccs-verify receipt.json
+
+# Verify from stdin
+cat receipt.json | ccs-verify -
+
+# Verify a full chain (L1 + behavior as separate files)
+ccs-verify --chain l1.json behavior.json
+
+# Verify a ReceiptRecord envelope (contains "l1" and "behavior")
+ccs-verify record.json
+
+# Verify a JSONL stream of receipts
+ccs-verify --stream receipts.jsonl
+
+# Machine-readable JSON output (for CI/CD pipelines)
+ccs-verify --json receipt.json
+
+# Check expiry
+ccs-verify --check-expiry receipt.json
+```
+
+You can also run it as a module without installing the console script:
+
+```bash
+python -m ccs_pydantic_ai.cli receipt.json
+```
+
+**Exit codes:** `0` = valid, `1` = invalid, `2` = usage/input error.
+
+The CLI uses the open-source MIT verifier — no proprietary `ccs-verifier`
+dependency required.
+
 ---
 
 ## Security model
