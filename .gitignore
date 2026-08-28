@@ -34,3 +34,4 @@ Thumbs.db
 *.key
 *.pem
 private_key*
+pypi-squat/
