@@ -53,7 +53,6 @@ ccs-crewai-verify = "ccs_crewai.cli:main"
 Homepage = "https://github.com/DSHCorrectover/ccs-integrations"
 Documentation = "https://github.com/DSHCorrectover/ccs-integrations/tree/main/adapters/ccs-crewai#readme"
 Issues = "https://github.com/DSHCorrectover/ccs-integrations/issues"
-Specification = "https://www.ietf.org/archive/id/draft-correctover-ccs-08.txt"
 Conformance = "https://github.com/DSHCorrectover/ccs-conformance-vectors"
 
 [tool.hatch.build.targets.wheel]
