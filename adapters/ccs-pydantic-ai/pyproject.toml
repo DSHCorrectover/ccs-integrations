@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "ccs-pydantic-ai"
-version = "0.1.0"
+version = "0.1.2"
 description = "Cryptographic runtime receipts for Pydantic AI agents — signed Ed25519 audit evidence for every tool call. CCS (Correctover Conformance Shape) L1 + behavior receipts."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -59,7 +59,6 @@ ccs-verify = "ccs_pydantic_ai.cli:main"
 Homepage = "https://github.com/DSHCorrectover/ccs-integrations"
 Documentation = "https://github.com/DSHCorrectover/ccs-integrations/tree/main/adapters/ccs-pydantic-ai#readme"
 Issues = "https://github.com/DSHCorrectover/ccs-integrations/issues"
-Specification = "https://www.ietf.org/archive/id/draft-correctover-ccs-08.txt"
 Conformance = "https://github.com/DSHCorrectover/ccs-conformance-vectors"
 
 [tool.hatch.build.targets.wheel]
