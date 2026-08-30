@@ -271,7 +271,6 @@ signers, toolset interception, and the open-source verifier.
 
 ## Specification and ecosystem
 
-- **IETF draft**: [draft-correctover-ccs-08](https://www.ietf.org/archive/id/draft-correctover-ccs-08.txt)
 - **Conformance vectors**: [DSHCorrectover/ccs-conformance-vectors](https://github.com/DSHCorrectover/ccs-conformance-vectors)
 - **Adapter registry**: [DSHCorrectover/ccs-integrations](https://github.com/DSHCorrectover/ccs-integrations)
 
