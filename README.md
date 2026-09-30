@@ -113,8 +113,19 @@ CCS interoperates with or is referenced by:
 
 ## Specification
 
-- IETF draft: [draft-correctover-ccs-08](https://www.ietf.org/archive/id/draft-correctover-ccs-08.txt)
-- Submission ID: 168143
+- IETF draft: [draft-correctover-ccs](https://datatracker.ietf.org/doc/draft-correctover-ccs/) — an individual Internet-Draft; not an RFC or IETF endorsement, and the Datatracker page is authoritative for revision and status
+
+## Commercial Support
+
+We help teams adopt CCS across their agent frameworks. Engagement is by email
+only — no calls.
+
+- **Adapter development** — building and hardening native CCS adapters for frameworks not yet covered
+- **Production rollout** — in-process and sidecar key modes, fail-closed enforcement, and signed-receipt pipelines
+- **Conformance & audit** — running the [CCS conformance benchmark](https://github.com/DSHCorrectover/ccs-conformance-vectors) across your integrations with an Ed25519-signed audit trail
+
+Scope and pricing are quoted per project after a short email scoping exchange.
+Contact: **wangguigui@correctover.com**.
 
 ## License
 
